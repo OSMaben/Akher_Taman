@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUsersRequest;
 use App\Http\Requests\UpdateUsersRequest;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -75,20 +76,12 @@ class UsersController extends Controller
 
     public function registerUser(Request $request)
     {
-//        $validatedData = $request->validate([
-//            'name' => 'required|string|max:255',
-//            'email' => 'required|string|email|max:255',
-//            'address' => 'required|string|max:255',
-//            'password' => 'required|string|max:255',
-//            'phone' => 'required|string|max:255',
-//        ]);
-
         $user = new Users();;
         $user->UserName = $request->name;
         $user->role_id = $request->role_id;
         $user->email = $request->email;
         $user->address = $request->address;
-        $user->password = $request->password;
+        $user->password = bcrypt($request->password);
         $user->PhoneNumber = $request->PhoneNumber;
         $user->save();
 
@@ -104,9 +97,12 @@ class UsersController extends Controller
     {
         $credentials = $request->only('email', 'password');
         $user = Users::where('email', $credentials['email'])->first();
-        if($user & Hash::check($credentials['password'], $user->password))
+        if($user &&  Hash::check($credentials['password'], $user->password))
         {
-            Auth::login($user); //this stores the object of user in
+            session(['user_id' => $user->id]); //store the id of the loged in user inside of the session
+            return "login successfuly";
         }
+        else
+            return "not Valide";
     }
 }

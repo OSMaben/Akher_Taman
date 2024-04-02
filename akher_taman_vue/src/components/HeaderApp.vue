@@ -14,7 +14,7 @@
       </div>
       <ul class="menu-list">
         <li class="menu-item-has-children">
-          <router-link to="/" class="drop-down">Home</router-link>
+          <router-link :to="{name: 'Home'}" class="drop-down" >Home</router-link>
         </li>
         <li>
           <a href="about.html">About Us</a>
@@ -57,11 +57,14 @@
         </svg>
       </div>
       <a href="" class="join-btn">Join Merchant</a>
-      <div class="eg-btn btn--primary2 header-btn">
-        <router-link :to="{ name: 'Register' }"  style="color: white">Register</router-link>
+      <div class="eg-btn btn--primary2 header-btn" v-if="$store.getters.getToken === 0">
+        <router-link :to="{ name: 'Register' }"  style="color: white" >Register</router-link>
       </div>
-      <div class="eg-btn btn--primary2 header-btn">
-        <router-link :to="{name: 'Dashboard'}" style="color: white">Dashboard</router-link>
+      <div class="eg-btn btn--primary2 header-btn" v-if="$store.getters.getToken !== 0">
+        <router-link :to="{name: 'Dashboard'}" style="color: white" >Dashboard</router-link>
+      </div>
+      <div class="eg-btn bg-dark mx-4 header-btn " v-if="$store.getters.getToken === 0">
+        <router-link :to="{name: 'Login'}" style="color: white" >Login</router-link>
       </div>
       <div class="mobile-menu-btn d-lg-none d-block">
         <i class="bx bx-menu"></i>

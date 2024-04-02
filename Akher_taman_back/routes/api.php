@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,10 @@ Route::controller(AuthController::class)->group(function()
     Route::post('login','login');
     Route::post('register','register');
 });
+
+
+
+//api functions
+Route::get('/products', [ProductsController::class, 'index']);
+Route::delete('/products/{id}', [ProductsController::class, 'delete']);
+Route::post('/products', [ProductsController::class, 'store']);

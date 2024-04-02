@@ -39,31 +39,31 @@
                       </div>
                     </div>
                     <p class="text-danger" v-for="error in errors" :key="error">
-
+                      <span v-for="err in error" :key="err">{{err}}</span>
                     </p>
                     <form @submit.prevent="register">
                       <div class="row gy-3 overflow-hidden">
                         <div class="col-12">
                           <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="FullName" id="FullName" placeholder="Full Name" v-model="form.name" required>
+                            <input type="text" class="form-control" name="FullName" id="FullName" placeholder="Full Name" v-model="form.name" >
                             <label for="firstName" class="form-label">Full Name</label>
                           </div>
                         </div>
                         <div class="col-12">
                           <div class="form-floating mb-3">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" v-model="form.email" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" v-model="form.email" >
                             <label for="email" class="form-label">Email</label>
                           </div>
                         </div>
                         <div class="col-12">
                           <div class="form-floating mb-3">
-                            <input type="password" class="form-control" name="password" id="password" value="" v-model="form.password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="password" id="password" value="" v-model="form.password" placeholder="Password" >
                             <label for="password" class="form-label">Password</label>
                           </div>
                         </div>
                         <div class="col-12">
                           <div class="form-floating mb-3">
-                            <input type="password" class="form-control" name="Confirm Password" id="password" value="" v-model="form.c_password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="Confirm Password" id="password" value="" v-model="form.c_password" placeholder="Password" >
                             <label for="password" class="form-label">Confirm Password</label>
                           </div>
                         </div>
@@ -94,6 +94,12 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import axios from 'axios';
+import {useRouter} from  "vue-router";
+import {useStore} from "vuex";
+
+
+const router = useRouter();
+const store = useStore();
 
 const form = reactive({
   name: '',
@@ -102,20 +108,22 @@ const form = reactive({
   c_password: ''
 });
 
-const error = ref('');
+const errors = ref([]);
 
 const register = async () => {
   try {
     const res = await axios.post('http://127.0.0.1:8000/api/register', form);
-    if (res.data.success) {
-      localStorage.setItem('token', res.data.data.token);
+    if (res && res.data && res.data.success) {
+      store.dispatch('setToken',res.data.data.token)
+      await router.push({name: 'Dashboard'})
     } else {
-      error.value = res.data.message;
+      errors.value = res && res.data && res.data.message ? [res.data.message] : ['Unknown error occurred'];
     }
   } catch (error) {
-    console.error('Error during registration:', error);
+    errors.value = error.response ? [error.response.data.message] : ['Network error occurred'];
   }
 };
+
 </script>
 
 

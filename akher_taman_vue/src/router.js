@@ -4,7 +4,7 @@ import AppRegister from '@/components/AppRegister.vue';
 import AppLogin from "@/components/AppLogin.vue";
 import AppHome from './components/AppHome.vue';
 import dashBoard from './components/DashBoard.vue'
-
+import store from "@/stores/index";
 const routes = [
     {
         path : '/',
@@ -44,11 +44,11 @@ const router = createRouter({
 
 
 router.beforeEach((to)=>{
-    if(to.meta.requiresAuth && !localStorage.getItem('token'))
+    if(to.meta.requiresAuth && store.getters.getToken === 0)
     {
         return {name : 'Login'}
     }
-    if(to.meta.requiresAuth === false && localStorage.getItem('token'))
+    if(to.meta.requiresAuth === false && store.getters.getToken !== 0)
     {
         return {name: 'Dashboard'}
     }

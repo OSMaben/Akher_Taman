@@ -52,15 +52,16 @@
     </div>
   </section>
 </template>
-
 <script>
 import { reactive, ref } from 'vue'
 import axios from 'axios'
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-
-
-export default{
-  setup(){
+export default {
+  setup() {
+    const router = useRouter();
+    const store = useStore(); // eslint-disable-next-line no-unused-vars
     let form = reactive({
       email: '',
       password: ''
@@ -68,19 +69,18 @@ export default{
 
     let error = ref('');
 
-    const login = async() =>{
-      await axios.post('http://127.0.0.1:8000/api/login',form).then(res=>{
-        if(res.data.success)
-        {
-            localStorage.setItem('token', res.data.data.token);
-        }else
-        {
+    const login = async () => {
+      await axios.post('http://127.0.0.1:8000/api/login', form).then(res => {
+        if (res.data.success) {
+          store.dispatch("setToken", res.data.data.token)
+          router.push({ name: 'Dashboard' })
+        } else {
           error.value = res.data.message;
         }
       })
     }
 
-    return{
+    return {
       form,
       login,
       error

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Validator;
-use Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -49,40 +49,38 @@ class AuthController extends Controller
      *     )
      * )
      */
-        public function register(Request $request)
+
+
+        public function showRegister()
         {
-            $validator = Validator::make($request->all(),[
-                'name' => 'required',
-                'email' => 'required|email',
-                'password' => 'required',
-                'c_password' => 'required|same:password'
-            ]);
-
-            if($validator->fails()){
-                $response = [
-                    'success' => false,
-                    'message' => $validator->errors()
-                ];
-                return response()->json($response, 400);
-            }
-
-            $input = $request->all();
-            $input['password'] = bcrypt($input['password']);
-            $input['role_id'] = 3;
-            $user = User::create($input);
-            
-            $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
-
-            $response = [
-                'success' => true,
-                'data' => $success,
-                'message' => 'User register successfully'
-            ];
-
-            return response()->json($response,200);
-
+                return view('Auth.register');
         }
+
+
+        public function showLogin()
+        {
+            return view('Auth.login');
+        }
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'c_password' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $input['role_id'] = 3;
+         User::create($input);
+
+        return redirect()->route('login');
+    }
 
 
 
@@ -122,27 +120,24 @@ class AuthController extends Controller
  * )
  */
 
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-         public function login(Request $request){
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password])){
-            $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
-
-            $response = [
-                'success' => true,
-                'data' => $success,
-                'message' => 'User login successfully'
-            ];
-            return response()->json($response,200);
-        }else{
-            $response = [
-                'success' => false,
-                'message' => 'Unauthorised'
-            ];
-            return response()->json($response);
+        if (Auth::attempt($credentials)) {
+            return redirect('dashboard');
         }
+
+        return redirect()->back()->withErrors(['email' => 'These credentials do not match our records.'])->withInput();
     }
+
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
 }
 
 

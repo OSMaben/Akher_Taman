@@ -14,9 +14,24 @@ class Products extends Model
         'starting_price',
         'description',
         'condition',
+        'status',
         'location',
         'category_id',
         'current_price',
-        'bid_end_time'
+        'bid_end_time',
+       'image',
     ];
+
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'seller_id');
+    }
+
+
 }

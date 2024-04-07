@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ProductsController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +18,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'showProduct']);
+Route::get('/details/{id}', [HomeController::class, 'detailsProduct']);
+
+Route::middleware('IsAuth')->group(function (){
+    Route::get('dashboard',[ProductsController::class, 'dashboard'])->name('dashboard');
+    Route::get('products',[ProductsController::class, 'showProducts'])->name('products');
+    Route::delete('/products/{id}', [ProductsController::class, 'delete'])->name('delete');
+    Route::post('/products', [ProductsController::class, 'store'])->name('addProduct');
+    Route::put('/products/{id}', [ProductsController::class, 'update'])->name('updateProduct');
+    //admin Conroller
+    Route::get('products', [AdminController::class, 'show']);
+    Route::post('/refuse/{id}',[AdminController::class, 'refuseProduct'])->name('refuse');
+    Route::post('/accept/{id}',[AdminController::class, 'acceptProduct'])->name('accept');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+
+
+//Auth
+
+Route::get('register', [AuthController::class, 'showRegister']);
+Route::get('login', [AuthController::class, 'showLogin']);
+
+
+
+Route::controller(AuthController::class)->group(function()
+{
+    Route::post('login','login')->name('login');
+    Route::post('register','register')->name('register');
+});
+
+
+
+
+
+
+//Route::middleware('auth:sanctum')->group(function()
+//{
+//    Route::get('/products', [ProductsController::class, 'index']);
+//
+//});
+
+
+
+

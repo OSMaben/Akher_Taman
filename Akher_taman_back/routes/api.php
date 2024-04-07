@@ -18,8 +18,18 @@ use App\Http\Controllers\API\ProductsController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+
 });
 
+
+
+
+Route::middleware('auth:sanctum')->group(function()
+{
+Route::get('/products', [ProductsController::class, 'index']);
+Route::delete('/products/{id}', [ProductsController::class, 'delete']);
+Route::post('/products', [ProductsController::class, 'store']);
+});
 
 
 Route::controller(AuthController::class)->group(function()
@@ -29,8 +39,8 @@ Route::controller(AuthController::class)->group(function()
 });
 
 
-
 //api functions
-Route::get('/products', [ProductsController::class, 'index']);
-Route::delete('/products/{id}', [ProductsController::class, 'delete']);
-Route::post('/products', [ProductsController::class, 'store']);
+
+//categories
+Route::get('/categories', [ProductsController::class, 'ShowCatgories']);
+

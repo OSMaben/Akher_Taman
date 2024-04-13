@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bid;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Support\Facades\Validator;
@@ -110,7 +111,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            toastr()->error('There was an error!');
+            toastr()->error('There was an error!')  ;
             return back()->withErrors($validator);
         }
 
@@ -136,6 +137,29 @@ class ProductsController extends Controller
 
         toastr()->success('Product has been updated successfully!');
         return back();
+    }
+
+    public function bidNow($id, Request $request)
+    {
+            $validator = Validator::make($request->all(), [
+                'bid_amount' => 'required',
+            ]);
+
+            if ($request->bid_amount < 20 || $request->bid_amount > 10000) {
+                toastr()->error('The bid must be more than $20 or less then 10000$');
+                return back()->withErrors($validator->errors());
+            }
+
+
+            $bid =new Bid;
+            $bid->user_id = Auth::id();
+            $bid->product_id = $id;
+            $bid->amount = $request->bid_amount;
+            $bid->save();
+
+            toastr()->success('your bid has been set!');
+            return back();
+
     }
 
 }

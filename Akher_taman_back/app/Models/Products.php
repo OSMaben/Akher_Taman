@@ -22,7 +22,6 @@ class Products extends Model
        'image',
     ];
 
-
     public function category()
     {
         return $this->belongsTo(Categories::class);
@@ -33,5 +32,9 @@ class Products extends Model
         return $this->belongsTo(User::class, 'seller_id');
     }
 
+    public function bids()
+    {
+        return $this->hasMany(Bid::class, 'product_id');
+    }
 
 }

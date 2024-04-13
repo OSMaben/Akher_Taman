@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Categories;
 use App\Models\Products;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
 
     public function show()
     {
-        $products = Products::with('owner')->get();
+        if(Auth::user()->role_id == 1)
+        {
+            $products = Products::all();
+        }else
+            $products = Products::where('seller_id',Auth::user()->id)->get();
         $categories = Categories::all();
         return view('products', compact('products', 'categories'));
     }

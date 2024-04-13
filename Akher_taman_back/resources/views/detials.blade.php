@@ -6,8 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Akher Taman</title>
 </head>
 <body>
@@ -41,10 +42,8 @@
 
                 <div class="order-lg-last col-lg-5 col-sm-8 col-8">
                     <div class="d-flex float-end">
-                        @if(Auth::check())
-                            <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Sign in</p> </a>
-                        <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-heart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Wishlist</p> </a>
-                        <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-shopping-cart m-1 me-md-2"></i><p class="d-none d-md-block mb-0">My cart</p> </a>
+                        @if(!Auth::check())
+                        <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Sign in</p> </a>
                         @endif
 
                     </div>
@@ -81,7 +80,10 @@
                    <div class="bg-danger p-2" style="border-radius:7px">
                        <i class="fa-regular fa-user text-white"></i>
                    </div>
-                    <p class="text-black">{{$details->user->name}}</p>
+                    <div class="d-flex flex-column gap-0" style="border-radius:7px">
+                        <p class="text-black">{{$details->user->name}}</p>
+                        <i class="fa-regular fa-message" style="font-size: 14px"></i>
+                    </div>
                 </a>
             </aside>
             <main class="col-lg-6">
@@ -104,8 +106,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <span class="h5">${{$details->current_price}}</span>
-                        <span class="text-muted">/per box</span>
+                        @if($highestBid)
+                        <span class="h5">${{ $highestBid->amount }}</span>
+                        <span class="text-muted">/highest bid</span>
+                        @else
+                        <p>no bids yet !</p>
+                        @endif
                     </div>
 
                     <p class="fs-5" style="color: #8c8c8c">
@@ -113,39 +119,45 @@
                     </p>
 
                     <div class="row">
-                        <dt class="col-3">category:</dt>
+                        <dt class="col-3" >category:</dt>
                         <dd class="col-9">{{ $details->category->name }}</dd>
 
-                        <dt class="col-3">started price</dt>
+                        <dt class="col-3" >started price</dt>
                         <dd class="col-9">{{ $details->current_price }}</dd>
 
                         <dt class="col-3">condition</dt>
                         <dd class="col-9">{{ $details->condition }}</dd>
 
-                        <dt class="col-3">location</dt>
+                        <dt class="col-3" >location</dt>
                         <dd class="col-9">{{ $details->location }}</dd>
                     </div>
 
                     <hr />
-
-                    <div class="row mb-4">
-                        <div class="col-md-8 col-6">
-                            <h6 class="mb-2">Bid Now</h6>
-                            <span style="color: #8c8c8c">Minimum Bid $20.00</span>
-                            <input class="form-control" type="email" name="bid_amount" placeholder="set your bid">
+                    <form method="post" action="{{route('bidnow', $details->id)}}">
+                        @csrf
+                        <div class="row mb-4">
+                            <div class="col-md-8 col-6">
+                                <h6 class="mb-2">Bid Now</h6>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="list-unstyled">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                <span style="color: #8c8c8c">Minimum Bid $20.00</span>
+                                <input class="form-control" type="number" name="bid_amount" placeholder="set your bid">
+                            </div>
                         </div>
-                        <!-- col.// -->
-
-                    </div>
-                    <a href="#" class="btn btn-danger shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> bid now </a>
-                    <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+                        <button type="submit" class="btn btn-danger shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> bid now </button>
+                    </form>
                 </div>
             </main>
         </div>
     </div>
 </section>
-<!-- content -->
-
 <section class="bg-light border-top py-4">
     <div class="container">
         <div class="row gx-4">
@@ -166,14 +178,60 @@
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">{{$details->description}}
                             <div class="col-12 col-md-6 my-3">
                                 <ul class="list-unstyled mb-0">
-                                    <li class="d-flex"><i class="fas fa-check text-success me-2"></i><p class="col-3">category:</p>{{ $details->category->name }}</li>
-                                    <li><i class="fas fa-check text-success me-2"></i> <p class="col-3">started price</p>{{ $details->current_price }}</li>
-                                    <li><i class="fas fa-check text-success me-2"></i><p class="col-3">condition</p>{{ $details->condition }}</li>
-                                    <li><i class="fas fa-check text-success me-2"></i><p class="col-3">location</p>{{ $details->location }}</li>
+                                    <li class="d-flex"><i class="fas fa-check text-success me-2"></i><p class="col-3"><strong>category:</strong></p>{{ $details->category->name }}</li>
+                                    <li class="d-flex"><i class="fas fa-check text-success me-2"></i> <p class="col-3"><strong>started price</strong></p>{{ $details->current_price }}</li>
+                                    <li class="d-flex"><i class="fas fa-check text-success me-2"></i><p class="col-3"><strong>condition</strong></p>{{ $details->condition }}</li>
+                                    <li class="d-flex"><i class="fas fa-check text-success me-2"></i><p class="col-3"><strong>location</strong></p>{{ $details->location }}</li>
 
                                 </ul>
                             </div></div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0"><div class="row mb-2">
+
+                                @if ($highestBid)
+                                    <p><span style="font-weight: bold">Highest Bidder:</span> {{ $highestBid->bidder->name }}</p>
+                                    <p><span style="font-weight: bold">Amount: </span>${{ $highestBid->amount }}</p>
+                                    <p><span style="font-weight: bold">Date:</span> {{ $highestBid->created_at }}</p>
+                                @else
+                                    <p>No bids yet.</p>
+                                @endif
+
+                            </div>
+                            <div class="wrapper rounded">
+
+                                <div class="row mt-2 pt-2">
+                                    <div class="col-md-6" id="income">
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <ul class="nav nav-tabs w-75">
+                                        <li class="nav-item"> <a class="nav-link active" href="#history">History</a> </li>
+                                    </ul>
+                                </div>
+                                <div class="table-responsive mt-3">
+                                    <table class="table table-dark table-borderless">
+                                        <thead>
+
+                                        <tr>
+                                            <th scope="col">Activity</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col" class="text-right">Amount</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($product->bids as $bid)
+                                            <tr>
+                                                <th scope="col">{{ $bid->bidder->name }}</th>
+                                                <th scope="col">{{ $bid->created_at }}</th>
+                                                <th scope="col" class="text-right">${{ $bid->amount }}</th>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
                             </div>
                         </div>

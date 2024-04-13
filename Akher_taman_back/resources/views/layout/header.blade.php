@@ -12,42 +12,19 @@
             </div>
         </div>
         <ul class="menu-list">
-            <li class="menu-item-has-children">
-                <a href="#" class="drop-down">Home</a><i class="bx bx-plus dropdown-icon"></i>
-                <ul class="submenu">
-                    <li><a href="index.html">Home 1</a></li>
-                    <li><a href="index2.html">Home 2</a></li>
-                    <li><a href="index3.html">Home 3</a></li>
-                </ul>
+            <li>
+                <a href="/home" >Home</a>
             </li>
             <li>
-                <a href="about.html">About Us</a>
+                <a href="/about">About Us</a>
             </li>
             <li>
-                <a href="how-works.html">How It Works</a>
+                <a href="/how-works">How It Works</a>
             </li>
             <li>
-                <a href="live-auction.html">Browse Product</a>
+                <a href="/">Browse Product</a>
             </li>
-            <li class="menu-item-has-children">
-                <a href="#">News</a><i class="bx bx-plus dropdown-icon"></i>
-                <ul class="submenu">
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="blog-details.html">Blog details</a></li>
-                </ul>
-            </li>
-            <li class="menu-item-has-children">
-                <a href="#" class="drop-down">Pages</a><i class="bx bx-plus dropdown-icon"></i>
-                <ul class="submenu">
-                    <li><a href="auction-details.html">Auction Details</a></li>
-                    <li><a href="faq.html">Faq</a></li>
-                    <li><a href="/register">register</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="signup.html">Sign Up</a></li>
-                    <li><a href="404.html">404</a></li>
-                </ul>
-            </li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/contact">Contact</a></li>
         </ul>
 
         <div class="d-lg-none d-block">
@@ -66,13 +43,15 @@
         </div>
     </div>
     <div class="nav-right d-flex align-items-center">
-        <div class="search-btn">
-            <i class="bi bi-search"></i>
-        </div>
-        <a href="join-merchant.html" class="join-btn">Join Merchant</a>
-        <div class="eg-btn btn--primary2 header-btn">
-            <a href="/register">Start</a>
-        </div>
+       @if(!Auth::check())
+            <div class="eg-btn btn--primary2 header-btn">
+                <a href="/register">register</a>
+            </div>
+        @else
+            <div class="eg-btn btn--primary2 header-btn">
+                <a href="/dashboard">dashboard</a>
+            </div>
+        @endif
         <div class="mobile-menu-btn d-lg-none d-block">
             <i class="bx bx-menu"></i>
         </div>

@@ -27,4 +27,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Products::class,'seller_id');
     }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class, 'user_id');
+    }
 }

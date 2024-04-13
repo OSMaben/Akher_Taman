@@ -126,6 +126,7 @@
                                     <th>category</th>
                                     <th>condition</th>
                                     <th>location</th>
+
                                     <th>action</th>
                                 </tr>
                                 </thead>
@@ -151,16 +152,14 @@
                                     <td> {{$product->id}} </td>
                                     <td> <img src="storage/images/{{$product->image ?? 'empty'}} " /></td>
                                     <td> {{$product->title}} </td>
-                                    <td> {{$product->description}} </td>
+                                    <td> {{ \Illuminate\Support\Str::words($product->description, 3)}} </td>
                                     <td> {{$product->starting_price}}</td>
                                     <td> {{$product->current_price}} </td>
                                     <td> {{$product->bid_end_time ?? 'empty'}} </td>
-                                    @if($product->status == 'active')
-                                        <td class="text-success"> {{$product->status}} </td>
-                                    @elseif($product->status == 'sold')
-                                        <td class="text-behance"> {{$product->status}} </td>
+                                    @if($product->isAccepted == 1)
+                                        <td class="text-success">Approved</td>
                                     @else
-                                        <td class="text-danger"> {{$product->status}} </td>
+                                        <td class="text-warning"> pending </td>
                                     @endif
                                     <td> {{$product->category->name}} </td>
 
@@ -306,16 +305,14 @@
                                                 <td> {{$product->id}} </td>
                                                 <td> <img src="storage/images/{{$product->image ?? 'empty'}} " /></td>
                                                 <td> {{$product->title}} </td>
-                                                <td> {{$product->description}} </td>
+                                                <td>{{ \Illuminate\Support\Str::words($product->description, 3)}} </td>
                                                 <td> {{$product->starting_price}}</td>
                                                 <td> {{$product->current_price}} </td>
                                                 <td> {{$product->bid_end_time ?? 'empty'}} </td>
-                                                @if($product->status == 'active')
-                                                    <td class="text-success"> {{$product->status}} </td>
-                                                @elseif($product->status == 'sold')
-                                                    <td class="text-behance"> {{$product->status}} </td>
+                                                @if($product->isAccepted == 1)
+                                                    <td class="text-success">Approved</td>
                                                 @else
-                                                    <td class="text-danger"> {{$product->status}} </td>
+                                                    <td class="text-danger"> No yet! </td>
                                                 @endif
                                                 <td> {{$product->category->name}} </td>
 

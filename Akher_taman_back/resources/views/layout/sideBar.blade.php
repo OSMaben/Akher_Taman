@@ -15,6 +15,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="/bids">
+                <span class="icon-bg"><i class="mdi mdi-wallet"></i></span>
+                <span class="menu-title">bids</span>
+            </a>
+        </li>
+        <li class="nav-item">
            @if(Auth::user()->role_id ==  1 )
                 <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                     <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>

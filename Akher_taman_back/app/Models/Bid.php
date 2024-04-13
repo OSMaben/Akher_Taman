@@ -9,9 +9,11 @@ class Bid extends Model
 {
     use HasFactory;
 
-    public function bids()
+    public function bidder()
     {
-        return $this->hasMany(Bid::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+
 
 }

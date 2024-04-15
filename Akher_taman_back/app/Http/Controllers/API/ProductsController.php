@@ -19,7 +19,12 @@ class ProductsController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+
+        $totalAcceptedBids = Bid::where('status', 'accepted')->count();
+        $totalAmountAcceptedBids = Bid::where('status', 'accepted')->sum('amount');
+        $profit = $totalAmountAcceptedBids - ($totalAcceptedBids * 30);
+        $numberOfproducts = Products::where('seller_id', Auth::id())->count();
+        return view('dashboard', compact('totalAcceptedBids','totalAmountAcceptedBids','profit','numberOfproducts'));
     }
 
     public function showProducts()

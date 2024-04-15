@@ -39,6 +39,17 @@ Route::middleware('IsAuth')->group(function (){
     Route::get('/bidDetails/{id}', [BidController::class, 'productAuction'])->name('bidDetails');
     Route::post('/bidDetails/{id}/accept', [BidController::class, 'acceptBid'])->name('acceptBid');
     Route::post('/bidDetails/{id}/refuse', [BidController::class, 'refuseBid'])->name('refuseBid');
+
+
+
+    Route::post('/bids/{id}/accept', [BidController::class, 'acceptBids'])->name('acceptBids');
+    Route::post('/bids/{id}/refuse', [BidController::class, 'refuseBids'])->name('refuseBids');
+
+    //accepted bids
+
+    Route::get('/Acceptedbids', [BidController::class, 'Acceptedbids']);
+
+    Route::post('/cancelAcceptedBids/{id}', [BidController::class, 'cancelAcceptedBids'])->name('cancelAcceptedBids');
 });
 
 

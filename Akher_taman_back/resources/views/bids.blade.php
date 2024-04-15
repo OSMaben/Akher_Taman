@@ -272,13 +272,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-search"></i></span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Search...">
+                            <input type="text" class="form-control" placeholder="Search..." id="seachProducts">
                         </div>
-                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                        <ul class="list-unstyled chat-list mt-2 mb-0" id="rowProducts">
                             @foreach($products as $product)
                                <a href="bidDetails/{{$product->id}}">
                                    @csrf
-                                   <li class="clearfix">
+                                   <li class="clearfix" >
                                        <img src="{{ asset('storage/images/' . $product->image) }}" alt="avatar">
                                        <div class="about">
                                            <div class="name">{{$product->title}}</div>
@@ -328,6 +328,7 @@
                                                         <th>Date</th>
                                                         <th>User</th>
                                                         <th>Amount</th>
+                                                        <th>Status</th>
                                                         <th>action</th>
                                                     </tr>
                                                     </thead>
@@ -347,18 +348,23 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-
-                                                                <form method="post" >
+                                                                @if($bid->status == 'pending')
+                                                                    <span class="text-warning">{{$bid->status}}</span>
+                                                                @else
+                                                                    <span class="text-success">{{$bid->status}}</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <form method="post" action="{{ route('acceptBids', $product->id) }}">
                                                                     @csrf
+                                                                    <input type="hidden" name="bid_id" value="{{ $bid->id }}">
                                                                     <button type="submit" class="mx-4" data-bs-toggle="modal">
                                                                         <i class="fa-solid fa-thumbs-up text-success"></i>
                                                                     </button>
                                                                 </form>
-
-                                                                <form class="text-danger" method="post" >
+                                                                <form class="text-danger" method="post" action="{{route('refuseBids', $bid->id)}}">
                                                                     @csrf
-                                                                    @method('post')
-                                                                    <button type="submit" >
+                                                                    <button type="submit">
                                                                         <i class="fa-solid fa-thumbs-down text-danger"></i>
                                                                     </button>
                                                                 </form>
@@ -382,10 +388,35 @@
 
                         </div>
                     </div>
+
                 </div>
 
             </div>
         </div>
     </div>
+
+
+    <script>
+        const searchProducts = document.getElementById('seachProducts');
+
+        searchProducts.addEventListener('input', function ()
+        {
+            const searchText = this.value.toLowerCase();
+            console.log(searchText)
+            const rowProducts  = document.querySelectorAll('#rowProducts li');
+
+            rowProducts.forEach(function(item) {
+                const productName = item.querySelector('.name').textContent.toLowerCase();
+
+                if (productName.includes(searchText)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+        })
+
+    </script>
 
 @endsection

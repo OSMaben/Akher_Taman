@@ -382,7 +382,7 @@
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    <form method="post" action="{{ route('acceptBid', $product->id) }}">
+                                                                    <form method="post" action="{{ route('acceptBid', ['id' => $bid->product_id]) }}">
                                                                         @csrf
                                                                         <input type="hidden" name="bid_id" value="{{ $bid->id }}">
                                                                         <button type="submit" class="mx-4" data-bs-toggle="modal">
@@ -391,6 +391,7 @@
                                                                     </form>
                                                                     <form class="text-danger" method="post" action="{{route('refuseBid', $bid->id)}}">
                                                                         @csrf
+                                                                        @method('post')
                                                                         <button type="submit">
                                                                             <i class="fa-solid fa-thumbs-down text-danger"></i>
                                                                         </button>

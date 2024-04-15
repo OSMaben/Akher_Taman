@@ -44,8 +44,9 @@
                     <div class="d-flex float-end">
                         @if(!Auth::check())
                         <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Sign in</p> </a>
+                        @else
+                            <a href="/dashboard" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">dashboard</p> </a>
                         @endif
-
                     </div>
                 </div>
 

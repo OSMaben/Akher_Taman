@@ -13,7 +13,7 @@
         </div>
         <ul class="menu-list">
             <li>
-                <a href="/home" >Home</a>
+                <a href="/" >Home</a>
             </li>
             <li>
                 <a href="/about">About Us</a>
@@ -48,8 +48,25 @@
                 <a href="/register">register</a>
             </div>
         @else
-            <div class="eg-btn btn--primary2 header-btn">
-                <a href="/dashboard">dashboard</a>
+            <div class="action">
+                <div class="profile" onclick="menuToggle();">
+                    <img src="images/faces/face28.png" />
+                </div>
+                <div class="menu">
+                    <h3>Someone Famous<br /><span>Website Designer</span></h3>
+                    <ul>
+                        <li>
+                            <img src="images/faces/face28.png" /><a href="/dashboard">My profile</a>
+                        </li>
+                        <li>
+                            <form method="post" action="{{route('logout')}}">
+                                @csrf
+                                <button type="submit" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
+                                    <span class="menu-title">Log Out</span></button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         @endif
         <div class="mobile-menu-btn d-lg-none d-block">
@@ -57,4 +74,118 @@
         </div>
     </div>
 </header>
+<script>
+    function menuToggle() {
+        const toggleMenu = document.querySelector(".menu");
+        toggleMenu.classList.toggle("active");
+    }
+</script>
+
+
+<style>
+
+
+    .action {
+        position: fixed;
+        top: 20px;
+        right: 30px;
+    }
+
+    .action .profile {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .action .profile img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .action .menu {
+        position: absolute;
+        top: 120px;
+        right: -10px;
+        padding: 10px 20px;
+        background: #fff;
+        width: 200px;
+        box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        transition: 0.5s;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .action .menu.active {
+        top: 80px;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .action .menu::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        right: 28px;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        transform: rotate(45deg);
+    }
+
+    .action .menu h3 {
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        padding: 20px 0;
+        font-weight: 500;
+        color: #555;
+        line-height: 1.5em;
+    }
+
+    .action .menu h3 span {
+        font-size: 14px;
+        color: #cecece;
+        font-weight: 300;
+    }
+
+    .action .menu ul li {
+        list-style: none;
+        padding: 16px 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        align-items: center;
+    }
+
+    .action .menu ul li img {
+        max-width: 20px;
+        margin-right: 10px;
+        opacity: 0.5;
+        transition: 0.5s;
+    }
+
+    .action .menu ul li:hover img {
+        opacity: 1;
+    }
+
+    .action .menu ul li a {
+        display: inline-block;
+        text-decoration: none;
+        color: #555;
+        font-weight: 500;
+        transition: 0.5s;
+    }
+
+    .action .menu ul li:hover a {
+        color: #ff5d94;
+    }
+</style>
+
 

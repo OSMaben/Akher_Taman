@@ -263,10 +263,10 @@
         }
     </style>
     <div class="container my-5">
-        <div class="row clearfix">
+        <div class="row clearfix " style="height: 100vh">
             <div class="col-lg-12">
 
-                <div class="card chat-app">
+                <div class="card chat-app h-100">
                     <div id="plist" class="people-list">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -372,7 +372,7 @@
                                                         </tr>
                                                         @endforeach
                                                     @else
-                                                        <p class="text-black">No bids Associated with this product</p>
+                                                        <td><p class="text-danger">No bids Associated with this product</p></td>
                                                     @endif
                                                     </tbody>
                                                 </table>

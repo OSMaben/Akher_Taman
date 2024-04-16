@@ -283,9 +283,9 @@
         }
     </style>
     <div class="container my-5">
-        <div class="row clearfix">
+        <div class="row clearfix"  style="height: 100vh">
             <div class="col-lg-12">
-                <div class="card chat-app">
+                <div class="card chat-app h-100">
                     <div id="plist" class="people-list">
                         <div class="input-group">
                             <a href="/bids">
@@ -401,7 +401,7 @@
                                                         @endforeach
                                                     @else
                                                         <tr>
-                                                            <td colspan="5" class="text-black">No bids associated with this product</td>
+                                                            <td colspan="5" class="text-danger">No bids associated with this product</td>
                                                         </tr>
                                                     @endif
                                                     </tbody>

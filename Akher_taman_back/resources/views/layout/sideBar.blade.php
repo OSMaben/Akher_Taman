@@ -14,19 +14,41 @@
                 <span class="menu-title">Products</span>
             </a>
         </li>
+        @if(Auth::user()->role_id == 2)
+            <li class="nav-item">
+                <a class="nav-link" href="/Mybids">
+                    <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+                    <span class="menu-title">My Bids</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/MyAcceptedBid">
+                    <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+                    <span class="menu-title">Accepted Bid</span>
+                </a>
+            </li>
+        @endif
+        @if(Auth::user()->role_id ==  3 )
+
         <li class="nav-item">
             <a class="nav-link" href="/bids">
                 <span class="icon-bg"><i class="mdi mdi-wallet"></i></span>
                 <span class="menu-title">bids</span>
             </a>
         </li>
-        @if(Auth::user()->role_id ==  3 )
         <li class="nav-item">
             <a class="nav-link" href="/Acceptedbids">
                 <span class="icon-bg"><i class="mdi mdi-wallet"></i></span>
                 <span class="menu-title">Accepted Bids</span>
             </a>
         </li>
+        @elseif(Auth::user()->role_id ==  1 )
+            <li class="nav-item">
+                <a class="nav-link" href="/manageUsers">
+                    <span class="icon-bg"><i class="mdi mdi-account text-danger"></i></span>
+                    <span class="menu-title">manage Users</span>
+                </a>
+            </li>
         @endif
         <li class="nav-item">
            @if(Auth::user()->role_id ==  1 )

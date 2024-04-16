@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('seller_id')->constrained('users'); 
+            $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
-            $table->decimal('starting_price', 10, 2); 
+            $table->decimal('starting_price', 10, 2);
             $table->decimal('current_price', 10, 2)->nullable();
             $table->timestamp('bid_end_time')->nullable();
             $table->enum('status', ['active', 'sold', 'expired'])->default('active');
-            $table->foreignId('category_id')->nullable()->constrained('categories'); 
+            $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->enum('condition', ['new', 'used', 'damaged'])->nullable();
             $table->string('location')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });
     }
-    
+
 
     /**
      * Reverse the migrations.

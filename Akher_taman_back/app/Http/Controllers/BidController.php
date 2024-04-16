@@ -28,10 +28,7 @@ class BidController extends Controller
             $bids = $bid;
         }
 
-
-
-            return view('bids', compact('products', 'lastProduct','bids'));
-
+        return view('bids', compact('products', 'lastProduct','bids')); 
     }
 
 

@@ -83,7 +83,7 @@
                    </div>
                     <div class="d-flex flex-column gap-0" style="border-radius:7px">
                         <p class="text-black">{{$details->user->name}}</p>
-                        <i class="fa-regular fa-message" style="font-size: 14px"></i>
+                        <a href="/chatify/{{$details->user->id}}"><i class="fa-regular fa-message" style="font-size: 14px"></i></a>
                     </div>
                 </a>
             </aside>

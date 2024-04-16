@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bid;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +25,13 @@ class ProductsController extends Controller
         $totalAmountAcceptedBids = Bid::where('status', 'accepted')->sum('amount');
         $profit = $totalAmountAcceptedBids - ($totalAcceptedBids * 30);
         $numberOfproducts = Products::where('seller_id', Auth::id())->count();
-        return view('dashboard', compact('totalAcceptedBids','totalAmountAcceptedBids','profit','numberOfproducts'));
+
+
+
+        $users = User::count();
+        $Products= Products::count();
+        $Bids = Bid::count();
+        return view('dashboard', compact('totalAcceptedBids','totalAmountAcceptedBids','profit','numberOfproducts','users','Products','Bids'));
     }
 
     public function showProducts()
@@ -146,6 +153,13 @@ class ProductsController extends Controller
 
     public function bidNow($id, Request $request)
     {
+        $product = Products::find($id);
+
+            if($product->seller_id === Auth::id())
+            {
+                return back()->with('error', 'the owner does have the ability to bid on his own product');
+            }
+
             $validator = Validator::make($request->all(), [
                 'bid_amount' => 'required',
             ]);

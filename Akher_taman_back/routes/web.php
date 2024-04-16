@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\BidController;
+use App\Http\Controllers\BuyerConroller;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,9 +51,21 @@ Route::middleware('IsAuth')->group(function (){
     Route::get('/Acceptedbids', [BidController::class, 'Acceptedbids']);
 
     Route::post('/cancelAcceptedBids/{id}', [BidController::class, 'cancelAcceptedBids'])->name('cancelAcceptedBids');
+
+
+    Route::get('/manageUsers', [AdminController::class, 'manageUser'])->name('manageUsers');
+
+
+    Route::post('changeRole/{id}', [AdminController::class, 'ChangeRole'])->name('changeRole');
+
+    //delete user
+
+    Route::delete('manageUsers/{id}', [AdminController::class, 'DeleteUser'])->name('DeleteUser');
+    Route::put('manageUsers/{id}', [AdminController::class , 'undoDeletion'])->name('undoDeletion');
+
+    Route::get('Mybids', [BuyerConroller::class, 'MyBids']);
+
 });
-
-
 
 //Auth
 

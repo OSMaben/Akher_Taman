@@ -7,29 +7,23 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-
+        @if(Auth::user()->role_id != 2)
         <li class="nav-item">
             <a class="nav-link" href="/products">
                 <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
                 <span class="menu-title">Products</span>
             </a>
         </li>
-        @if(Auth::user()->role_id == 2)
+        @elseif(Auth::user()->role_id == 2)
             <li class="nav-item">
                 <a class="nav-link" href="/Mybids">
                     <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
                     <span class="menu-title">My Bids</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/MyAcceptedBid">
-                    <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
-                    <span class="menu-title">Accepted Bid</span>
-                </a>
-            </li>
-        @endif
-        @if(Auth::user()->role_id ==  3 )
 
+        @endif
+        @if(Auth::user()->role_id ==  3)
         <li class="nav-item">
             <a class="nav-link" href="/bids">
                 <span class="icon-bg"><i class="mdi mdi-wallet"></i></span>
@@ -70,11 +64,11 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <div class="d-flex align-items-center">F
-                            <div class="sidebar-profile-img">
-                                <img src="images/faces/face28.png" alt="image">
+                            <div class="sidebar-profile-img ownImage">
+                                <img class="rounded-circle w-100" src="{{asset('storage/imageProfile/'. Auth()->user()->image)}}" alt="image">
                             </div>
                             <div class="sidebar-profile-text">
-                                <p class="mb-1">{{Auth()->user()->name}}</p>
+                                <a href="profile/{{Auth()->user()->id}}" class="mb-1">{{Auth()->user()->name}}</a>
                             </div>
                         </div>
                     </div>

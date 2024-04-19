@@ -6,6 +6,8 @@ use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\BuyerConroller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -64,6 +66,25 @@ Route::middleware('IsAuth')->group(function (){
     Route::put('manageUsers/{id}', [AdminController::class , 'undoDeletion'])->name('undoDeletion');
 
     Route::get('Mybids', [BuyerConroller::class, 'MyBids']);
+
+    Route::post('Mybids/{id}', [BuyerConroller::class, 'CancelBid'])->name('CancelBid');
+    Route::post('Mybids/BuyProduct/{id}', [PaymentController::class, 'BuyProduct'])->name('BuyProduct');
+
+
+    Route::get('MyAcceptedBid', [BuyerConroller::class, 'MyAcceptedBid']);
+
+
+
+    Route::get('payment/{id}', [PaymentController::class, 'payment'])->name('payment');
+    Route::post('payment/{id}', [PaymentController::class, 'mollie'])->name('stripePost');
+    Route::get('success', [PaymentController::class, 'success'])->name('success');
+    Route::get('cancel', [PaymentController::class, 'cancel'])->name('cancel');
+
+
+    //profile
+    Route::get('profile/{id}',[ProfileController::class, 'Profile'])->name('profile');
+//    Route::put('profile/{id}',[ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
+    Route::put('profile/{id}', [ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
 
 });
 

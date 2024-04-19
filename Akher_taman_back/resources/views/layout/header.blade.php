@@ -50,13 +50,13 @@
         @else
             <div class="action">
                 <div class="profile" onclick="menuToggle();">
-                    <img src="images/faces/face28.png" />
+                    <img src="{{asset('storage/imageProfile/'. Auth()->user()->image)}}" />
                 </div>
                 <div class="menu">
-                    <h3>Someone Famous<br /><span>Website Designer</span></h3>
+                    <h3>{{Auth()->user()->name}}</h3>
                     <ul>
                         <li>
-                            <img src="images/faces/face28.png" /><a href="/dashboard">My profile</a>
+                            <img class="rounded-circle w-100" src="{{asset('storage/imageProfile/'. Auth()->user()->image)}}" alt="image"><a href="/dashboard">My profile</a>
                         </li>
                         <li>
                             <form method="post" action="{{route('logout')}}">

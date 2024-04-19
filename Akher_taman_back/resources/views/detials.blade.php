@@ -77,15 +77,43 @@
                 <div class="border rounded-4 mb-3 d-flex justify-content-center">
                     <img src="{{ asset('storage/images/' . $details->image) }}" style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" alt=""/>
                 </div>
-                <a href="profileDetails" class="d-flex justify-content-start align-items-center gap-2 mb-3">
-                   <div class="bg-danger p-2" style="border-radius:7px">
-                       <i class="fa-regular fa-user text-white"></i>
-                   </div>
-                    <div class="d-flex flex-column gap-0" style="border-radius:7px">
-                        <p class="text-black">{{$details->user->name}}</p>
-                        <a href="/chatify/{{$details->user->id}}"><i class="fa-regular fa-message" style="font-size: 14px"></i></a>
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="flex-shrink-0">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                             alt="Generic placeholder image" class="img-fluid rounded-circle border border-dark border-3"
+                             style="width: 70px;">
                     </div>
-                </a>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="d-flex flex-row align-items-center mb-2">
+                            <p class="mb-0 me-2">@ {{$details->user->name}}</p>
+                            <ul class="mb-0 list-unstyled d-flex flex-row" style="color: #de1111;">
+                                <li>
+                                    <i class="fas fa-star fa-xs"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-xs"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-xs"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-xs"></i>
+                                </li>
+                                <li>
+                                    <i class="fas fa-star fa-xs"></i>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <a href="/profileDetails" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-rounded btn-sm"
+                                    data-mdb-ripple-color="dark">See profile</a>
+                            <a href="/contact" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-floating btn-sm"
+                                    data-mdb-ripple-color="dark"><i class="fas fa-comment"></i></a>
+                        </div>
+                    </div>
+                </div>
+
             </aside>
             <main class="col-lg-6">
                 <div class="ps-lg-3">

@@ -170,7 +170,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                <canvas id="myChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -210,5 +210,34 @@
 <!-- Custom js for this page -->
 <script src="js/dashboard.js"></script>
 <!-- End custom js for this page -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['number of products', 'users', 'bids', 'profite'],
+            datasets: [{
+                label: '# of Votes',
+                data: [{{$Products}}, {{$users}} , {{$Bids}}, {{$profit}}],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+</script>
+
 </body>
 </html>

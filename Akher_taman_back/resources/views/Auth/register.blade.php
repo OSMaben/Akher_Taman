@@ -40,6 +40,16 @@
 {{--                                        <p class="text-danger" v-for="error in errors" :key="error">--}}
 {{--                                            <span v-for="err in error" :key="err">{{err}}</span>--}}
 {{--                                        </p>--}}
+
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul class="list-unstyled">
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
                                         <form method="post" action="{{route('register')}}">
                                             @csrf
                                             <div class="row gy-3 overflow-hidden">

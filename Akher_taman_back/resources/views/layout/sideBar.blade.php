@@ -32,10 +32,11 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/Acceptedbids">
-                <span class="icon-bg"><i class="mdi mdi-wallet"></i></span>
+                <span class="icon-bg"><i class="mdi mdi-check-decagram"></i></span>
                 <span class="menu-title">Accepted Bids</span>
             </a>
         </li>
+
         @elseif(Auth::user()->role_id ==  1 )
             <li class="nav-item">
                 <a class="nav-link" href="/manageUsers">
@@ -59,11 +60,23 @@
                 </ul>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/messages/{{auth()->user()->id}}">
+                <span class="icon-bg"><i class="mdi mdi-android-messages text-danger"></i></span>
+                <span class="menu-title">messages</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/profile/{{auth()->user()->id}}">
+                <span class="icon-bg"><i class="mdi mdi-account text-danger"></i></span>
+                <span class="menu-title">profile</span>
+            </a>
+        </li>
         <li class="nav-item sidebar-user-actions">
             <div class="user-details">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <div class="d-flex align-items-center">F
+                        <div class="d-flex align-items-center">
                             <div class="sidebar-profile-img ownImage">
                                 <img class="rounded-circle w-100" src="{{asset('storage/imageProfile/'. Auth()->user()->image)}}" alt="image">
                             </div>

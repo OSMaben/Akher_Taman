@@ -45,7 +45,7 @@
                         @if(!Auth::check())
                         <a href="/login" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">Sign in</p> </a>
                         @else
-                            <a href="/dashboard" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">dashboard</p> </a>
+                            <a href="/dashboard" class="me-1 border rounded py-1 px-3 nav-link d-flex align-items-center" target="_blank"> <i class="fas fa-user-alt m-1 me-md-2"></i><p class="d-none d-md-block mb-0">{{auth()->user()->name}}</p> </a>
                         @endif
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                             </ul>
                         </div>
                         <div>
-                            <a href="/profileDetails" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-rounded btn-sm"
+                            <a href="/profileDetails/{{$details->user->id}}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-rounded btn-sm"
                                     data-mdb-ripple-color="dark">See profile</a>
                             <a href="/contact" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-floating btn-sm"
                                     data-mdb-ripple-color="dark"><i class="fas fa-comment"></i></a>

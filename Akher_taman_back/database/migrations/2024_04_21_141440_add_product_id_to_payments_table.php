@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('payment', function (Blueprint $table) {
-            $table->integer('productId');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->integer('productId')->nullable()->after('payment_method');
         });
     }
 
@@ -21,7 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('payment', function (Blueprint $table) {
+        Schema::table('payments', function (Blueprint $table) {
+            $table->dropColumn('productId');
         });
     }
 };

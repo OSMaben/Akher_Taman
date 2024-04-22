@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ProductsController;
 use App\Http\Controllers\BidController;
 use App\Http\Controllers\BuyerConroller;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -86,12 +87,20 @@ Route::middleware('IsAuth')->group(function (){
 //    Route::put('profile/{id}',[ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
     Route::put('profile/{id}', [ProfileController::class, 'UpdateProfile'])->name('UpdateProfile');
 
+    //profile Details
+
+
+    Route::get('messages/{id}', [MessagesController::class, 'GetMessage'])->name('messages');
+
 });
 
 //Auth
 
 Route::get('register', [AuthController::class, 'showRegister']);
 Route::get('login', [AuthController::class, 'showLogin']);
+
+
+Route::get('profileDetails/{id}', [ProfileController::class, 'showProfilDetails'])->name('profileDetails');
 
 
 

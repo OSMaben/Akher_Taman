@@ -68,6 +68,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'c_password' => 'required|same:password',
+
         ]);
 
         if ($validator->fails()) {
@@ -76,7 +77,7 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
-        $input['role_id'] = 3;
+        $input['role_id'] = 2;
          User::create($input);
 
         return redirect()->route('login');

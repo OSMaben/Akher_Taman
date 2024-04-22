@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +54,13 @@ class ProfileController extends Controller
             $user->save();
 
             return redirect()->to('dashboard')->with('success', 'Congrates ✨  your profile has been updated !');
+    }
 
+
+    public function showProfilDetails($id)
+    {
+        $user = User::find($id);
+        $products = Products::where('seller_id', $id)->get();
+        return view('profilePage', compact('user', 'products'));
     }
 }

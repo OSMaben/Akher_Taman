@@ -10,7 +10,6 @@
                 </div>
                 <div class="col-1 d-flex justify-content-end align-items-center">
                     <div class="search-cross-btn style-2">
-
                         <i class="bi bi-x"></i>
                     </div>
                 </div>
@@ -183,7 +182,7 @@
                                 </div>
                             </div>
                             <div class="auction-content">
-                                <h4><a href="auction-details.html">{{$product->title}}</a></h4>
+                                <h4><a href="details/{{$product->id}}">{{$product->title}}</a></h4>
                                 <div class="author-price-area">
                                     <div class="author">
                                         <img alt="image" src="images/bg/auction-authr1.png"><span class="name">

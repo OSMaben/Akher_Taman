@@ -17,4 +17,14 @@ class MessageService implements ImessageService
     {
         return $this->message->recieveMessage($Reciever);
     }
+
+    public function getUniqueSenders()
+    {
+        return $this->message->getUniqueSenders();
+    }
+
+    public function getMessagesWithLastSender($lastSenderId)
+    {
+        return $this->message->getMessagesWithLastSender($lastSenderId);
+    }
 }

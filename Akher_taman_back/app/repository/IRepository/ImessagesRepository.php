@@ -5,4 +5,7 @@ interface ImessagesRepository
 {
     //method here
     public function recieveMessage($recipientId);
+    public function getUniqueSenders();
+
+    public function getMessagesWithLastSender($lastSenderId);
 }

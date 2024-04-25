@@ -34,4 +34,12 @@ class HomeController extends Controller
 
         return response()->json($users);
     }
+
+    public function findProducts(Request $request)
+    {
+        $query = $request->input('query');
+        $products = Products::where('title', 'like', "%$query%")->get();
+
+        return response()->json($products);
+    }
 }

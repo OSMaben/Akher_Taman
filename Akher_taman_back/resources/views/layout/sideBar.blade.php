@@ -46,13 +46,7 @@
             </li>
         @endif
         <li class="nav-item">
-           @if(Auth::user()->role_id ==  1 )
-                <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                    <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                    <span class="menu-title">Manage</span>
-                    <i class="menu-arrow"></i>
-                </a>
-            @endif
+
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> users </a></li>

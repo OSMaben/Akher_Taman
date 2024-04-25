@@ -93,7 +93,8 @@ Route::middleware('IsAuth')->group(function (){
     Route::get('messages/{id}', [MessagesController::class, 'GetMessage'])->name('messages');
     Route::post('messages/{id}', [MessagesController::class, 'SendMessage'])->name('SendMessage');
 
-
+    Route::get('/search', [HomeController::class, 'find']);
+    Route::get('/searchProduct', [HomeController::class, 'findProducts']);
     Route::get('messagesPerson/{id}', [MessagesController::class, 'GetPersonMessage'])->name('GetPersonMessage');
 });
 
@@ -114,7 +115,7 @@ Route::controller(AuthController::class)->group(function()
 });
 
 
-Route::get('/search', [HomeController::class, 'find']);
+
 
 
 
